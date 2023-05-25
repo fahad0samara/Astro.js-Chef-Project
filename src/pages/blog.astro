@@ -1,0 +1,24 @@
+---
+import { getFirstBlogPost, getBlogPostBySlug } from "../lib/api";
+
+export async function getStaticPaths() {
+    const slugs = await getFirstBlogPost();
+    const paths = slugs.map((slug) => ({ params: { slug } }));
+    return {
+        paths,
+        fallback: false,
+    };
+}
+
+export async function getStaticProps({ params }) {
+    const { slug } = params;
+    console.log("Slug:", slug);
+    const blogPost = await getBlogPostBySlug(slug);
+    console.log("Blog Post:", blogPost);
+    return {
+        props: {
+            blogPost,
+        },
+    };
+}
+---

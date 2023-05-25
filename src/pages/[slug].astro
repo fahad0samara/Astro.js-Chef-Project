@@ -1,0 +1,24 @@
+---
+import { getFirstBlogPost, imageUrlBuilder } from "../../lib/api";
+
+const builder = imageUrlBuilder(useSanityClient());
+
+export async function getServerData({ params }) {
+  const firstPost = await getFirstBlogPost();
+  const currentPost = firstPost.find((post) => post.slug.current === params.slug);
+  const imageUrl = builder.image(currentPost.imageUrl).url();
+  
+  return {
+    props: {
+      title: currentPost.title,
+      author: currentPost.author.name,
+      imageUrl,
+      body: currentPost.body[0].children[0].text,
+    },
+  };
+}
+
+
+---
+
+
