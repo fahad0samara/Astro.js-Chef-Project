@@ -4,13 +4,18 @@ async function getFirstBlogPost() {
   const query = groq`*[_type == "post"]{
     ...,
     "author": author->,
-    "bodyText": body[0].children[0].text,
-
-     "imageUrls": body[_type == "image"].asset->url
+    "imageUrl": mainImage.asset->url,
+         "imageUrls": body[_type == "image"].asset->url,
+             "categories": categories[]->,
+         
+    
   }`;
   const firstPost = await useSanityClient().fetch(query);
   return firstPost;
 }
 
-
 export {getFirstBlogPost, imageUrlBuilder};
+  
+  
+ 
+

@@ -1,49 +1,46 @@
 ---
-import { getFirstBlogPost } from "../lib/api";
-
-import { Image, Picture } from '@astrojs/image/components';
-
+import {getFirstBlogPost} from "../lib/api";
+ import {Image} from '@astrojs/image/components';
 const firstPost = await getFirstBlogPost();
-console.log(firstPost);
+
 ---
 <div class="container mx-auto">
   <h1 class="text-3xl font-bold mb-4">Blog Posts</h1>
- <div class="container mx-auto">
-
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <!-- Map through the blog posts -->
     {firstPost.map((post) => (
       <div class="p-4 bg-white shadow" key={post._id}>
-        <a href={`/blog/${post.slug.current}`}>
+        {post.mainImage && (
+          <a href={`/blog/${post.slug.current}`}>
+            <Image
+              				src={post.imageUrl} 
+              alt={post.title}
+              width={400}
+              height={400}
+            />
+          </a>
+        )}
+        <div class="mt-2">
           <h2 class="text-xl font-bold mb-2">{post.title}</h2>
-          {post.author && (
-            <p class="text-gray-500 mb-2">Author: {post.author.name}</p>
+          {post.categories && (
+            <div class="text-gray-500 mb-2">
+              Categories:{" "}
+              {post.categories.map((category, index) => (
+                <span key={category._key}>
+                  {category.title}
+                  {index < post.categories.length - 1 && ", "}
+                </span>
+              ))}
+            </div>
           )}
-   
-    {post.mainImage && (
-              <a href={`/blog/${post.slug.current}`}>
-                <Image
-                  class="rounded-lg"
-                  src={post.mainImage}
-                  alt={post.title}
-                  width={400}
-                  height={400}
-                  format="jpg"
-                />
-              </a>
-            )}
-        
-          <p class="text-gray-500 mb-4">{post.body[0].children[0].text}</p>
-          <div class="flex justify-between items-center">
-            <p class="text-gray-400">{post._createdAt}</p>
-            <a href={`/blog/${post.slug.current}`} class="text-blue-500">Read more</a>
-          </div>
-        </a>
+          {post.bodyPreview && (
+            <p class="text-gray-500 mb-4">{post.bodyPreview}</p>
+          )}
+          <a href={`/blog/${post.slug.current}`} class="text-blue-500">Read more</a>
+        </div>
       </div>
     ))}
   </div>
-</div>
-
 </div>
 
 

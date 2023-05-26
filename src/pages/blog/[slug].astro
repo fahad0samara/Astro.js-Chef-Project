@@ -1,60 +1,50 @@
 ---
 import { getFirstBlogPost } from "../../lib/api";
 
-import { Image, Picture } from "@astrojs/image/components";
-
-import { imageUrlBuilder } from "../../lib/api";
-
 export async function getStaticPaths() {
-    const allBlogPosts = await getFirstBlogPost();
-    return allBlogPosts.map((post) => ({
-        params: {
-            slug: post.slug.current,
-        },
-        props: {
-            post,
-        },
-    }));
+  const allBlogPosts = await getFirstBlogPost();
+  return allBlogPosts.map((post) => ({
+    params: {
+      slug: post.slug.current,
+    },
+    props: {
+      post,
+    },
+  }));
 }
 
 const { post } = Astro.props;
 ---
-
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="generator" content={Astro.generator} />
-    </head>
-    <body>
-        <h1>{post.title}</h1>
-        <p>{post.bodyText}</p>
-        <div>
-            Categories:{" "}
-            {
-                post.categories.map((category, index) => (
-                    <span key={category._key}>
-                        {category.title}
-                        {index < post.categories.length - 1 && ", "}
-                    </span>
-                ))
-            }
-        </div>
-        {
-            post.imageUrls && (
-                <div>
-                    {post.imageUrls.map((imageUrl, index) => (
-                        <img
-                            src={imageUrl}
-                            alt={`Image ${index + 1}`}
-                            width={400}
-                            height={400}
-                        />
-                    ))}
-                </div>
-            )
-        }
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <h1 class="text-3xl font-bold my-4">{post.title}</h1>
+    <p>{post.bodyText}</p>
+    <div class="my-4">
+      <span class="font-semibold">Categories:</span>{" "}
+      {post.categories && post.categories.map((category, index) => (
+        <span key={category._key}>
+          {category.title}
+          {index < post.categories.length - 1 && ", "}
+        </span>
+      ))}
+    </div>
+    <p class="text-gray-500 mb-4">{post.body[0].children[0].text}</p>
+
+    {post.imageUrls && (
+      <div class="my-4">
+        {post.imageUrls.map((imageUrl, index) => (
+          <img src={imageUrl} alt={`Image ${index + 1}`} class="w-48 h-48 object-cover" />
+        ))}
+      </div>
+    )}
+  </body>
 </html>
+
+
