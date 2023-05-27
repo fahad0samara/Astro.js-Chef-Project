@@ -3,30 +3,116 @@ import {
   groq,
   createImageBuilder,
   portableTextToHtml,
+  SanityClientLike,
 } from "astro-sanity";
+
+interface ImageStyle {
+  style: string;
+  tailwindClasses: string;
+}
+
+interface CustomComponents {
+  types: {
+    image: (props: {value: string}) => string;
+  };
+  block: {
+    h1: (props: {children: string}) => string;
+    h2: (props: {children: string}) => string;
+    h3: (props: {children: string}) => string;
+    h4: (props: {children: string}) => string;
+    h5: (props: {children: string}) => string;
+    h6: (props: {children: string}) => string;
+    p: (props: {children: string}) => string;
+    a: (props: {children: string; href: string}) => string;
+    pre: (props: {children: string}) => string;
+    code: (props: {language: string; code: string}) => string;
+    inlineCode: (props: {code: string}) => string;
+    blockquote: (props: {children: string}) => string;
+    hr: () => string;
+  };
+}
 
 async function getFirstBlogPost() {
   const query = groq`*[_type == "post"]{
     ...,
     "author": author->,
     "imageUrl": mainImage.asset->url,
-         "imageUrls": body[_type == "image"].asset->url,
-             "categories": categories[]->,
-            "relatedPosts": relatedPosts[]->{_id, title, "imageUrl": mainImage.asset->url, "slug": slug.current},
-         
-    
+    "imageUrls": body[_type == "image"].asset->url,
+    "categories": categories[]->,
+    "relatedPosts": relatedPosts[]->{_id, title, "imageUrl": mainImage.asset->url, "slug": slug.current},
   }`;
-  const firstPost = await useSanityClient().fetch(query);
+  const firstPost = await (useSanityClient() as SanityClientLike).fetch(query);
   return firstPost;
 }
-const imageUrlBuilder = createImageBuilder(useSanityClient());
-function UrlForImage(source) {
+
+const imageUrlBuilder = createImageBuilder(
+  useSanityClient() as SanityClientLike
+);
+
+function UrlForImage(source: string) {
   return imageUrlBuilder.image(source);
 }
-const customComponents = {
+
+const customComponents: CustomComponents = {
   types: {
-    image: ({value}) =>
-      `<img src="${UrlForImage(value).url()}" style="max-width:100%;" />`,
+    image: ({value}) => {
+      const imageStyles: ImageStyle[] = [
+        {
+          style: `
+            max-width: 100%;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          `,
+          tailwindClasses: `
+            mb-4
+            border-2
+            border-gray-300
+            rounded-lg
+            shadow-md
+          `,
+        },
+        {
+          style: `
+            max-width: 100%;
+            margin-bottom: 1rem;
+            border: 2px dashed #999;
+            border-radius: 4px;
+            box-shadow: none;
+          `,
+          tailwindClasses: `
+            mb-2
+            border-2
+            border-dashed
+            border-gray-400
+            rounded
+          `,
+        },
+        {
+          style: `
+            max-width: 100%;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+          `,
+          tailwindClasses: `
+            mb-8
+          `,
+        },
+      ];
+
+      const currentStyle =
+        imageStyles[Math.floor(Math.random() * imageStyles.length)];
+
+      const className = `custom-image-${Math.floor(Math.random() * 1000)}`;
+      const styleTag = `<style>.${className} { ${currentStyle.style} }</style>`;
+
+      return `${styleTag}<img src="${UrlForImage(
+        value
+      ).url()}" class="${className} ${currentStyle.tailwindClasses}" />`;
+    },
   },
   block: {
     h1: ({children}) =>
@@ -56,7 +142,7 @@ const customComponents = {
   },
 };
 
-function sanityPortableText(portabletext) {
+function sanityPortableText(portabletext: any) {
   return portableTextToHtml(portabletext, customComponents);
 }
 

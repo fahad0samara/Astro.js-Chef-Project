@@ -37,6 +37,11 @@ const { post } = Astro.props;
         />
       </div>
     )}
+    
+
+
+    <PortableText portableText={post.body} />
+
         {post.recipes && (
       <div class="my-4">
         <h2 class="text-2xl font-bold mb-2">Recipes</h2>
@@ -51,7 +56,7 @@ const { post } = Astro.props;
                 </li>
               ))}
             </ul>
-            <h4 class="text-lg font-medium">Instructions:</h4>
+            <h4 class="text-lg font-medium bg-black  text-white">Instructions:</h4>
             <ol class="list-decimal ml-6">
               {recipe.instructions.split("\n").map((instruction, index) => (
                 <li key={index} class="mb-1">
@@ -63,9 +68,6 @@ const { post } = Astro.props;
         ))}
       </div>
     )}
-
-
-    <PortableText portableText={post.body} />
 
     {post.nutrition && (
       <div class="my-4">
