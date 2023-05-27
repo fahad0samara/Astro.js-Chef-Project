@@ -13,7 +13,7 @@ const firstPost = await getFirstBlogPost();
         {post.mainImage && (
           <a href={`/blog/${post.slug.current}`}>
             <Image
-              				src={post.imageUrl} 
+              				src={post.imageUrl}
               alt={post.title}
               width={400}
               height={400}
