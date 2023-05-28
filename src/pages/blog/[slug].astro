@@ -33,7 +33,29 @@ const { post } = Astro.props;
       post.author && (
         <div class="mb-4">
           <h2 class="text-2xl font-bold text-yellow-500">Author</h2>
-          <p class="text-gray-600">{post.author.name}</p>
+          <p class="text-gray-600">
+
+          
+
+            {post.author.name}</p>
+        </div>
+      )
+    }
+    {/* Tags */}
+    {
+      post.tags && (
+        <div class="mb-4">
+          <h2 class="text-2xl font-bold mb-2 text-yellow-500">Tags</h2>
+          <div class="flex flex-wrap">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                class="bg-gray-200 text-gray-800 rounded-full px-4 py-2 text-sm font-semibold mr-2 mb-2"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       )
     }
@@ -43,11 +65,12 @@ const { post } = Astro.props;
       post.mainImage && (
         <div class="mb-4">
           <Image
-            width={200}
-            height={200}
+            width={850}
+            height={250}
+         
             src={UrlForImage(post.mainImage).url()}
             alt={post.title}
-            class="w-full"
+            class=""
           />
         </div>
       )
@@ -56,7 +79,7 @@ const { post } = Astro.props;
 
     <div class="mb-4">
       {
-        post.body.map((block, index) => {
+        post.body?.map((block, index) => {
           if (block._type === "block") {
             let blockStyle = "";
             if (block.style === "h1") {
@@ -175,24 +198,7 @@ const { post } = Astro.props;
       )
     }
 
-    {/* Tags */}
-    {
-      post.tags && (
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold mb-2 text-yellow-500">Tags</h2>
-          <div class="flex flex-wrap">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                class="bg-gray-200 text-gray-800 rounded-full px-4 py-2 text-sm font-semibold mr-2 mb-2"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      )
-    }
+    
 
     {/* Categories */}
     {
