@@ -17,206 +17,174 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 ---
-
-<LayoutBlog>
+<LayoutBlog title={post.title}>
+  
   <div class="max-w-3xl mx-auto px-4 py-8">
-    {/* Title */}
-    <h1 class="text-4xl font-bold mb-4">{post.title}</h1>
+  <div class="container mx-auto px-4 py-8">
+  <div class="max-w-3xl mx-auto">
+    <!-- Title -->
+    <h1 class="text-4xl font-bold mb-4 text-gray-800">{post.title}</h1>
 
-    {/* Published Date */}
+    <!-- Author -->
+    {post.author && (
+      <div class="flex items-center mb-4">
+        <div class="mr-4">
+          <Image
+            width={50}
+            height={50}
+            src={UrlForImage(post.author.image).url()}
+            alt={post.author.name}
+            class="rounded-full"
+          />
+        </div>
+        <div>
+          <p class="text-gray-600 font-semibold">Written by</p>
+          <p class="text-gray-700 font-semibold">{post.author.name}</p>
+          {post.author.bio && (
+            <p class="text-gray-600 mt-1">{post.author.bio[0].children[0].text}</p>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- Published Date -->
     <p class="text-gray-600 mb-4">
       Published on {new Date(post.publishedAt).toLocaleDateString()}
     </p>
 
-    {/* Author */}
-    {
-      post.author && (
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-yellow-500">Author</h2>
-          <p class="text-gray-600">
+    <!-- Main Image -->
+    {post.mainImage && (
+      <div class="mb-4">
+        <Image
+          width={850}
+          height={250}
+          src={UrlForImage(post.mainImage).url()}
+          alt={post.title}
+          class="rounded-lg"
+        />
+      </div>
+    )}
 
-          
+    <!-- Bio -->
+    {post.bio && <h2 class="text-lg text-gray-800 mb-4">{post.bio.text}</h2>}
 
-            {post.author.name}</p>
+    <!-- Tags -->
+    {post.tags && (
+      <div class="mb-4">
+        <h2 class="text-2xl font-bold mb-2 text-gray-800">Tags</h2>
+        <div class="flex flex-wrap">
+          {post.tags.map((tag) => (
+            <span
+              key={tag}
+              class="bg-gray-200 text-gray-800 rounded-full px-4 py-2 text-sm font-semibold mr-2 mb-2"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
-      )
-    }
-    {/* Tags */}
-    {
-      post.tags && (
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold mb-2 text-yellow-500">Tags</h2>
-          <div class="flex flex-wrap">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                class="bg-gray-200 text-gray-800 rounded-full px-4 py-2 text-sm font-semibold mr-2 mb-2"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      )
-    }
+      </div>
+    )}
+  </div>
+</div>
 
-    {/* Main Image */}
-    {
-      post.mainImage && (
-        <div class="mb-4">
-          <Image
-            width={850}
-            height={250}
-         
-            src={UrlForImage(post.mainImage).url()}
-            alt={post.title}
-            class=""
-          />
-        </div>
-      )
-    }
+
     {/* Body */}
-
     <div class="mb-4">
-      {
-        post.body?.map((block, index) => {
-          if (block._type === "block") {
-            let blockStyle = "";
-            if (block.style === "h1") {
-              blockStyle = "text-4xl font-bold mb-4";
-            } else if (block.style === "h2") {
-              blockStyle = "text-3xl font-bold mb-4";
-            } else if (block.style === "h3") {
-              blockStyle = "text-2xl font-bold mb-4";
-            } else if (block.style === "h4") {
-              blockStyle = "text-xl font-bold mb-4";
-            } else if (block.style === "blockquote") {
-              blockStyle = "border-l-4 border-gray-900 pl-4 italic my-4";
-            } else if (block.style === "normal") {
-              blockStyle = "text-lg mb-4";
-            } else if (block.style === "bullet") {
-              blockStyle = "list-disc list-inside mb-4";
-            } else if (block.style === "number") {
-              blockStyle = "list-decimal list-inside mb-4";
-            }
+      {post.body?.map((block, index) => {
+        if (block._type === "block") {
+          let blockStyle = "";
+          if (block.style === "h1") {
+            blockStyle = "text-4xl font-bold mb-4";
+          } else if (block.style === "h2") {
+            blockStyle = "text-3xl font-bold mb-4";
+          } else if (block.style === "h3") {
+            blockStyle = "text-2xl font-bold mb-4";
+          } else if (block.style === "h4") {
+            blockStyle = "text-xl font-bold bg-yellow-400 text-center mx-14";
+          } else if (block.style === "blockquote") {
+            blockStyle = "border-l-4 border-gray-900 pl-4 italic my-4";
+          } else if (block.style === "normal") {
+            blockStyle = "text-lg mb-4";
+          } else if (block.style === "bullet") {
+            blockStyle = "list-disc list-inside mb-4";
+          } else if (block.style === "number") {
+            blockStyle = "list-decimal list-inside mb-4";
+          }
 
-            if (block.listItem === "bullet" || block.listItem === "number") {
-              return (
-                <li class={`${blockStyle}`}>
-                  {block.children.map((child) => child.text).join("")}
-                </li>
-              );
-            } else {
-              return (
-                <p class={`mb-4 ${blockStyle}`}>
-                  {block.children.map((child) => child.text).join("")}
-                </p>
-              );
-            }
-          } else if (block._type === "image") {
+          if (block.listItem === "bullet" || block.listItem === "number") {
             return (
-              <div class="mb-4">
-                <Image
-                  width={200}
-                  height={200}
-                  src={UrlForImage(block).url()}
-                  alt={post.title}
-                />
-              </div>
+              <li key={index} class={blockStyle}>
+                {block.children.map((child) => child.text).join("")}
+              </li>
             );
           } else {
-            return null;
+            return (
+              <p key={index} class={`mb-4 ${blockStyle}`}>
+                {block.children.map((child) => child.text).join("")}
+              </p>
+            );
           }
-        })
-      }
+        } else if (block._type === "image") {
+          return (
+            <div key={index} class="mb-4">
+              <Image
+                width={200}
+                height={200}
+                src={UrlForImage(block).url()}
+                alt={post.title}
+              />
+            </div>
+          );
+        } else {
+          return null;
+        }
+      })}
     </div>
 
-    {/* Nutrition */}
-    {
-      post.nutrition && (
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold mb-2 text-yellow-500">
-            Nutrition Information
-          </h2>
-          <div class="flex">
-            <div class="mr-8">
-              <div class="flex items-center mb-4">
-                <div class="w-14 h-14 rounded-full bg-red-500 flex items-center justify-center">
-                  <p class="text-2xl font-bold text-white">
-                    {post.nutrition.calories}
-                  </p>
-                </div>
-                <div class="ml-4">
-                  <p class="text-lg font-semibold mb-1 text-gray-900">
-                    Calories
-                  </p>
-                  <p class="text-gray-600">per serving</p>
-                </div>
-              </div>
-              <div class="flex items-center mb-4">
-                <div class="w-14 h-14 rounded-full bg-green-500 flex items-center justify-center">
-                  <p class="text-2xl font-bold text-white">
-                    {post.nutrition.carbohydrates}
-                  </p>
-                </div>
-                <div class="ml-4">
-                  <p class="text-lg font-semibold mb-1 text-gray-900">
-                    Carbohydrates
-                  </p>
-                  <p class="text-gray-600">per serving</p>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="flex items-center mb-4">
-                <div class="w-14 h-14 rounded-full bg-purple-500 flex items-center justify-center">
-                  <p class="text-2xl font-bold text-white">
-                    {post.nutrition.fat}
-                  </p>
-                </div>
-                <div class="ml-4">
-                  <p class="text-lg font-semibold mb-1 text-gray-900">Fat</p>
-                  <p class="text-gray-600">per serving</p>
-                </div>
-              </div>
-              <div class="flex items-center mb-4">
-                <div class="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center">
-                  <p class="text-2xl font-bold text-white">
-                    {post.nutrition.protein}
-                  </p>
-                </div>
-                <div class="ml-4">
-                  <p class="text-lg font-semibold mb-1 text-gray-900">
-                    Protein
-                  </p>
-                  <p class="text-gray-600">per serving</p>
-                </div>
-              </div>
-            </div>
-          </div>
+{/* Nutrition */}
+{post.nutrition && (
+  <div class="mb-4">
+    <h2 class="text-2xl font-bold mb-2 text-yellow-500">Nutrition Information</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full bg-red-500 flex items-center justify-center">
+          <p class="text-2xl font-bold text-white">{post.nutrition.calories}</p>
         </div>
-      )
-    }
-
-    
-
-    {/* Categories */}
-    {
-      post.categories && (
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold mb-2 text-yellow-500">Categories</h2>
-          <div class="flex flex-wrap">
-            {post.categories.map((category) => (
-              <span
-                key={category._id}
-                class="bg-gray-200 text-gray-800 rounded-full px-4 py-2 text-sm font-semibold mr-2 mb-2"
-              >
-                {category.title}
-              </span>
-            ))}
-          </div>
+        <div class="ml-4">
+          <p class="text-lg font-semibold mb-1 text-gray-900">Calories</p>
+          <p class="text-gray-600">per serving</p>
         </div>
-      )
-    }
+      </div>
+      <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full bg-green-500 flex items-center justify-center">
+          <p class="text-2xl font-bold text-white">{post.nutrition.carbohydrates}</p>
+        </div>
+        <div class="ml-4">
+          <p class="text-lg font-semibold mb-1 text-gray-900">Carbohydrates</p>
+          <p class="text-gray-600">per serving</p>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full bg-purple-500 flex items-center justify-center">
+          <p class="text-2xl font-bold text-white">{post.nutrition.fat}</p>
+        </div>
+        <div class="ml-4">
+          <p class="text-lg font-semibold mb-1 text-gray-900">Fat</p>
+          <p class="text-gray-600">per serving</p>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center">
+          <p class="text-2xl font-bold text-white">{post.nutrition.protein}</p>
+        </div>
+        <div class="ml-4">
+          <p class="text-lg font-semibold mb-1 text-gray-900">Protein</p>
+          <p class="text-gray-600">per serving</p>
+        </div>
+      </div>
+    </div>
   </div>
-</LayoutBlog>
+)}
+
+  </div>
+</LayoutBlog>;
