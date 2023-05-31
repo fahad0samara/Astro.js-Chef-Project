@@ -1,5 +1,7 @@
 ---
+import Footer from '../components/Footer.astro';
 import Testimonials from '../components/testimonials.astro';
+
 import About from '../components/About.astro';
 import Layout from '../layouts/Layout.astro';
 import Home from '../components/Home.astro';
@@ -9,17 +11,19 @@ import Card from '../components/Card.astro';
 
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout
+title="Home"
+
+>
 	<main>
-		<h1
-			class="bg-black"
-		>Welcome to <span class="text-gradient">Astro</span></h1>
+	
 	
 <Home/>
 	<About/>
 		    <Card/>
 
 		<Testimonials/>
+			<Footer/>
 
 	</main>
 </Layout>
