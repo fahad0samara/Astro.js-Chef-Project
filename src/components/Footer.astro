@@ -15,7 +15,8 @@ import { Icon } from "astro-icon";
       </svg>
       <div class="max-w-screen-xl mx-auto relative z-10">
         <div class="flex items-center justify-between mb-8">
-          <a to="/" class="flex items-center">
+          <a href="/"
+          class="flex items-center">
             <img
               src="https://flowbite.com/docs/images/logo.svg"
               class="h-8 mr-3"
@@ -27,22 +28,18 @@ import { Icon } from "astro-icon";
           </a>
           <ul class="flex flex-wrap items-center space-x-4 text-sm font-medium text-gray-800">
             <li>
-              <a to="/" class="hover:underline">
+              <a class="hover:underline">
                 Home
               </a>
             </li>
             <li>
-              <a to="/" class="hover:underline">
+              <a  class="hover:underline">
                 Menu
               </a>
             </li>
+          
             <li>
-              <a to="/" class="hover:underline">
-                About
-              </a>
-            </li>
-            <li>
-              <a to="/" class="hover:underline">
+              <a href="contact" class="hover:underline">
                 Contact
               </a>
             </li>
@@ -53,8 +50,10 @@ import { Icon } from "astro-icon";
         <div class="flex justify-center mt-8">
           <span class="text-gray-800">
             © 2023{" "}
-            <a to="/" class="hover:underline text-blue-700">
-              Taste the World
+            <a 
+            href="/"
+             class="hover:underline text-red-500">
+              The Balanced Chef 
             </a>
             . All Rights Reserved.
           </span>
