@@ -3,46 +3,32 @@ import { Icon } from "astro-icon";
 ---
 
     <footer class="bg-gradient-to-b from-red-400 to-red-500 rounded-lg shadow-lg p-8 relative">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1440 320"
+    <Icon name="Mave"
         class="absolute bottom-0 left-0 right-0"
-      >
-        <path
-          fill="#fff"
-          d="M0,256L48,234.7C96,213,192,171,288,165.3C384,160,480,192,576,181.3C672,171,768,117,864,106.7C960,96,1056,128,1152,144C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-        ></path>
-      </svg>
+     />
       <div class="max-w-screen-xl mx-auto relative z-10">
-        <div class="flex items-center justify-between mb-8">
-          <a href="/"
-          class="flex items-center">
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              class="h-8 mr-3"
-              alt="Flowbite Logo"
-            />
-            <span class="text-xl font-semibold text-white">
+        <div class="flex  justify-between mb-8 md:flex-row flex-col items-center">
+          <div>
+             <a href="/"
+          class="flex items-center mb-2">
+               <Icon name="Chef"
+                          class="h-14 w-14 items-center"
+
+                           />
+            <span class="text-xl font-semibold text-white mt-1 ml-3">
         The Balanced Chef
             </span>
           </a>
-          <ul class="flex flex-wrap items-center space-x-4 text-sm font-medium text-gray-800">
-            <li>
-              <a class="hover:underline">
-                Home
-              </a>
-            </li>
-            <li>
-              <a  class="hover:underline">
-                Menu
-              </a>
-            </li>
-          
-            <li>
-              <a href="contact" class="hover:underline">
-                Contact
-              </a>
-            </li>
+          </div>
+         
+          <ul class="flex flex-wrap  space-x-4 text-sm font-medium items-center">
+            <li
+              class="text-white mb-4"
+            >
+          <a href="/recipes" class="mr-5 hover:text-red-500">Recipes</a>
+<a href="/about" class="mr-5 hover:text-red-500">About</a>
+<a href="/contact" class="mr-5 hover:text-red-500">Contact</a>
+</li>
           </ul>
         </div>
         <hr class="border-blue-300 mb-8" />

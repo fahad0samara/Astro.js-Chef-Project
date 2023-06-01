@@ -1,6 +1,5 @@
 ---
 import { getFirstBlogPost, UrlForImage } from "../../lib/api";
-
 import LayoutBlog from "../../layouts/LayoutBlog.astro";
 import { Image } from "@astrojs/image/components";
 export async function getStaticPaths() {
@@ -14,7 +13,6 @@ export async function getStaticPaths() {
     },
   }));
 }
-
 const { post } = Astro.props;
 ---
 <LayoutBlog title={post.title}>
@@ -75,7 +73,7 @@ const { post } = Astro.props;
         <div class="flex flex-wrap">
           {post.tags.map((tag) => (
             <span
-              key={tag}
+              
               class="bg-gray-200 text-gray-800 rounded-full px-4 py-2 text-sm font-semibold mr-2 mb-2"
             >
               {tag}
@@ -205,4 +203,4 @@ const { post } = Astro.props;
 
 
   </div>
-</LayoutBlog>;
+</LayoutBlog>
