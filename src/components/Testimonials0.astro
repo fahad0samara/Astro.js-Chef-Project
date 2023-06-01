@@ -1,5 +1,7 @@
 ---
+import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
+import img from '../assets/photo-1605602517387-ec78b947335e.avif'
 ---
 
 <div>
@@ -53,14 +55,17 @@ import { Icon } from "astro-icon";
                                     highly recommend trying their dishes!"
                                 </p>
                                 <div class="flex items-center mt-4 space-x-4">
-                                    <img
-                                        src="https://source.unsplash.com/50x50/?portrait?2"
+                                  <Image
+                                        src={img}
+                                       
                                         alt=""
-                                        class="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                                    />
+                                        class="bg-center bg-cover rounded-full "
+                                        width={20}
+                                        height={20}
+                                        />
                                     <div>
                                         <p class="text-lg font-semibold">
-                                            Emma Thompson
+                                            Steward Masweneng
                                         </p>
                                         <p class="text-sm text-gray-400">
                                             Health Coach
