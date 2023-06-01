@@ -1,7 +1,10 @@
 ---
 import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
-import img from '../assets/photo-1605602517387-ec78b947335e.avif'
+import img0 from '../assets/img0.jpg'
+import img1 from '../assets/img1.jpg'
+import img2 from '../assets/img2.jpg'
+import img3 from '../assets/img3.jpg'
 ---
 
 <div>
@@ -32,11 +35,14 @@ import img from '../assets/photo-1605602517387-ec78b947335e.avif'
                                     guilt-free experience."
                                 </p>
                                 <div class="flex items-center mt-4 space-x-4">
-                                    <img
-                                        src="https://source.unsplash.com/50x50/?portrait?1"
+                                  <Image
+                                        src={img0}
+                                       
                                         alt=""
-                                        class="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                                    />
+                                        class="bg-center bg-cover rounded-full "
+                                        width={45}
+                                        height={45}
+                                        />
                                     <div>
                                         <p class="text-lg font-semibold">
                                             Leroy Jenkins
@@ -56,12 +62,12 @@ import img from '../assets/photo-1605602517387-ec78b947335e.avif'
                                 </p>
                                 <div class="flex items-center mt-4 space-x-4">
                                   <Image
-                                        src={img}
+                                        src={img1}
                                        
                                         alt=""
                                         class="bg-center bg-cover rounded-full "
-                                        width={20}
-                                        height={20}
+                                        width={45}
+                                        height={45}
                                         />
                                     <div>
                                         <p class="text-lg font-semibold">
@@ -84,11 +90,14 @@ import img from '../assets/photo-1605602517387-ec78b947335e.avif'
                                     It has been a game-changer for me!"
                                 </p>
                                 <div class="flex items-center mt-4 space-x-4">
-                                    <img
-                                        src="https://source.unsplash.com/50x50/?portrait?3"
+                                  <Image
+                                        src={img2}
+                                       
                                         alt=""
-                                        class="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                                    />
+                                        class="bg-center bg-cover rounded-full "
+                                        width={45}
+                                        height={45}
+                                        />
                                     <div>
                                         <p class="text-lg font-semibold">
                                             Sophia Lee
@@ -109,11 +118,14 @@ import img from '../assets/photo-1605602517387-ec78b947335e.avif'
                                     eat well without sacrificing taste!"
                                 </p>
                                 <div class="flex items-center mt-4 space-x-4">
-                                    <img
-                                        src="https://source.unsplash.com/50x50/?portrait?4"
+                                    <Image
+                                        src={img3}
+                                       
                                         alt=""
-                                        class="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                                    />
+                                        class="bg-center bg-cover rounded-full "
+                                        width={45}
+                                        height={45}
+                                        />
                                     <div>
                                         <p class="text-lg font-semibold">
                                             Oliver Smith
