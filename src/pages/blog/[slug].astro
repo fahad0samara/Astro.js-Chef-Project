@@ -2,6 +2,7 @@
 import { getFirstBlogPost, UrlForImage } from "../../lib/api";
 import LayoutBlog from "../../layouts/LayoutBlog.astro";
 import { Image } from "@astrojs/image/components";
+import { Icon } from "astro-icon";
 export async function getStaticPaths() {
   const allBlogPosts = await getFirstBlogPost();
   return allBlogPosts.map((post) => ({
@@ -16,9 +17,34 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 ---
 <LayoutBlog title={post.title}>
-  
-  <div class="max-w-4xl mx-auto px-4 py-8">
-  <div class="container mx-auto px-4 py-8">
+<div
+class="pt-4 xl:pl-10 mx-3 "
+    
+>
+    <a 
+                    href="/"
+       class=" bg-red-500
+        hover:bg-red-700
+        text-white
+        font-bold
+        py-2
+        px-4
+        rounded
+        inline-flex
+        items-center
+        transition duration-200 ease-in-out
+        focus:outline-none
+        
+       ">
+                    <Icon name="Back" class="w-4 h-4 mr-2" />
+
+                Back to home
+                 </a>
+                   <div class="max-w-4xl mx-auto p-7 my-10   bg-gradient-to-b from-red-50 to-red-100 shadow-2xl rounded-2xl
+                   ">
+     
+    
+  <div class="container mx-auto px-4 py-8 ">
   <div class="max-w-3xl mx-auto">
     <!-- Title -->
     <h1 class="text-4xl font-bold mb-4 text-gray-800">{post.title}</h1>
@@ -26,6 +52,7 @@ const { post } = Astro.props;
     <!-- Author -->
     {post.author && (
       <div class="flex items-center mb-4">
+           
         <div class="mr-4">
           <Image
             width={50}
@@ -203,4 +230,6 @@ const { post } = Astro.props;
 
 
   </div>
+</div>
+
 </LayoutBlog>
