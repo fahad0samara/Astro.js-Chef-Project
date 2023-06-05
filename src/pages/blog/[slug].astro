@@ -5,7 +5,7 @@ import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
 export async function getStaticPaths() {
   const allBlogPosts = await getFirstBlogPost();
-  return allBlogPosts.map((post) => ({
+  return allBlogPosts.map((post: { slug: { current: any; }; }) => ({
     params: {
       slug: post.slug.current,
     },
@@ -14,7 +14,42 @@ export async function getStaticPaths() {
     },
   }));
 }
-const { post } = Astro.props;
+
+type PostProps = {
+  title: string;
+  author: {
+    image: string;
+    name: string;
+    bio: {
+      children: {
+        text: string;
+      }[];
+    }[];
+  };
+  publishedAt: string;
+  mainImage: string;
+  bio?: {
+    text: string;
+  };
+  tags?: string[];
+  body?: {
+    _type: string;
+    style: string;
+  listItem?: string | undefined; 
+    children: {
+      text: string;
+    }[];
+  }[];
+  nutrition?: {
+    calories: number;
+    carbohydrates: number;
+    fat: number;
+    protein: number;
+  };
+};
+const { post } = Astro.props as 
+  | { post: PostProps }
+  | { post: PostProps; preview: boolean };
 ---
 <LayoutBlog title={post.title}>
 <div
@@ -150,12 +185,15 @@ class="pt-4 xl:pl-10 mx-3 "
             );
           }
         } else if (block._type === "image") {
+
           return (
             <div  class="mb-4">
               <Image
                 width={200}
                 height={200}
-                src={UrlForImage(block).url()}
+                src={
+                  //@ts-ignore
+                  UrlForImage(block).url()}
                 alt={post.title}
               />
             </div>

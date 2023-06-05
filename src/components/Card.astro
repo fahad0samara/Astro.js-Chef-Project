@@ -1,88 +1,91 @@
-<!-- ---
-import {getFirstBlogPost} from "../lib/api";
- import {Image} from '@astrojs/image/components';
-const firstPost = await getFirstBlogPost();
+---
+import { getFirstBlogPost } from "../lib/api";
+import { Image } from '@astrojs/image/components';
+import { Icon } from "astro-icon";
 
+const firstPost = await getFirstBlogPost();
 ---
 
 
-
-<section class="bg-white py-6 sm:py-8 lg:py-12">
-  <div class="mx-auto max-w-screen-xl px-4 md:px-8"> 
-    <!-- Heading -->
-    <div class="mb-10 md:mb-16">
-      <h2 class="mb-4 text-center text-3xl font-bold text-gray-900 md:mb-6 lg:text-4xl">Recent Posts</h2>
-
-      <p class="mx-auto max-w-screen-md text-center text-gray-600 md:text-lg">Discover delicious recipes, cooking tips, and more.</p>
-    </div>
-    <!-- /Heading -->
-    <div class="grid gap-4 sm:grid-cols-2 sm:gap- lg:grid-cols-2 xl:grid-cols-2 ">
-      <!-- Article -->
-      {firstPost.map((post) => (
-        <article class="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
-          {post.mainImage && (
-            <a href={`/blog/${post.slug.current}`} class="block relative h-48 overflow-hidden rounded-md">
-              <img
-                src={post.imageUrl}
-                alt={post.title}
-                class="group relative block h-56 w-full object-cover self-start overflow-hidden rounded-lg shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40 transition duration-200 transform hover:scale-105"
-              />
-              <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-200">
-                <svg class="w-10 h-10 text-white bg-red-500 rounded-full p-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="M12 5l7 7-7 7"></path>
-                </svg>
-              </div>
-            </a>
-          )}
-
-          <div class="flex flex-col gap-2">
-            <span class="text-xs text-gray-500 font-semibold">
-              {post.publishDate}
-            </span>
-
-            <h2 class="text-xl font-bold text-gray-900">
-              <a href="#" class="transition duration-100 hover:text-green-500 active:text-green-600">{post.title}</a>
-            </h2>
-
-            <p class="text-gray-700">
-              {post.bodyPreview && (
-                <p class="text-gray-500 mb-4">{post.bodyPreview}</p>
-              )}
-            </p>
-
-            {post.categories && (
-              <div class="text-gray-500 mb-2">
-                Categories:{" "}
-                {post.categories.map((category, index) => (
-                  <span >
-                    {category.title}
-                    {index < post.categories.length - 1 && ", "}
-                  </span>
-                ))}
-              </div>
+  <section class="bg-white py-6 sm:py-8 lg:py-12">
+    <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+      {/* Heading */}
+      <div class="mb-10 md:mb-16">
+        <h2 class="mb-4 text-center text-3xl font-bold text-gray-900 md:mb-6 lg:text-4xl">Recent Posts</h2>
+        <p class="mx-auto max-w-screen-md text-center text-gray-600 md:text-lg">Discover delicious recipes, cooking tips, and more.</p>
+      </div>
+      {/* /Heading */}
+      <div class="grid gap-4 items-center sm:grid-cols-2 sm:gap- lg:grid-cols-2 xl:grid-cols-2">
+        {/* Article */}
+        {firstPost.map((post: any) => (
+          <article class="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
+            {post.mainImage && (
+              <a href={`/blog/${post.slug.current}`} class="block relative h-48 overflow-hidden rounded-md">
+                <Image
+                  src={post.imageUrl}
+                  alt={post.title}
+                  class="group relative block  w-full object-cover self-start overflow-hidden rounded-lg shadow-lg  transition duration-200 transform hover:scale-105"
+                  width={200}
+                  height={200}
+                />
+              
+           
+                     <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-200">
+                   <Icon
+                  name="arrow-right"
+                 class="w-10 h-10 text-white bg-red-500 rounded-full p-2"
+                />
+                </div>
+              </a>
             )}
 
-            <div>
-              <a href={`/blog/${post.slug.current}`} class="flex items-center font-semibold text-red-500 transition duration-100 hover:text-red-600 active:text-red-700">
-                Read more
-                <svg class="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
+            <div class="flex flex-col gap-2 items-center">
+              <span class="text-xs text-gray-500 font-semibold">
+                {post.publishDate}
+              </span>
+
+              <h2 class="text-xl font-bold text-gray-900">
+                <a href="#" class="transition duration-100 hover:text-green-500 active:text-green-600">{post.title}</a>
+              </h2>
+
+              <p class="text-gray-700">
+                {post.bodyPreview && (
+                  <p class="text-gray-500 mb-4">{post.bodyPreview}</p>
+                )}
+              </p>
+
+              {post.categories && (
+                <div class="text-gray-500 mb-2">
+                  Categories:{" "}
+                  {post.categories.map((category: any, index: number) => (
+                    <span >
+                      {category.title}
+                      {index < post.categories.length - 1 && ", "}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div
+                class="flex items-center gap-2 text-sm font-semibold "
+              >
+                <a href={`/blog/${post.slug.current}`} class="flex items-center font-semibold text-red-500 transition duration-100 hover:text-red-600 active:text-red-700">
+                  Read more
+               
+                
+                </a>
+                   <Icon
+                    name="arrow-right"
+                    class="w-7 h- cursor-pointer animate-pulse mt-1 text-red-500 transition duration-100 hover:text-red-600 active:text-red-700"
+                    
+                    
+                    
+                  />
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-
-
-
-
-
- -->
