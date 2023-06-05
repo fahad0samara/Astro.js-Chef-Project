@@ -2,7 +2,6 @@ import {
   useSanityClient,
   groq,
   createImageBuilder,
-  portableTextToHtml,
   SanityClientLike,
 } from "astro-sanity";
 
