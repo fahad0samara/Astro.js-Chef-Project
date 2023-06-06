@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon";
+import home0 from '../assets/howm.jpg'
+import { Image } from "@astrojs/image/components";
 ---
 
 <div class="relative pt-12 pb-8 bg-black xl:pt-24 sm:pb-12 lg:pb-20 xl:pb-24 2xl:pb-32">
@@ -26,9 +28,15 @@ import { Icon } from "astro-icon";
         </div>
     </header>
     <div class="absolute inset-0 ">
-        <img
+        <Image
+        src={home0}
+        width={1920}
+        height={1080}
+        alt="The Balanced Chef"
+
+        
             class="object-cover w-full h-full filter brightness-75"
-            src="https://images.skynewsarabia.com/images/v1/2019/10/10/1289872/900/506/1-1289872.jpg"
+           src={home0}
             alt=""
         />
     </div>

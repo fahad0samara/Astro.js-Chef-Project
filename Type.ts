@@ -1,4 +1,5 @@
 export type PostProps = {
+  
   title: string;
   author: {
     image: string;

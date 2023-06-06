@@ -1,6 +1,6 @@
 ---
 import { getFirstBlogPost, UrlForImage } from "../../lib/api";
-import LayoutBlog from "../../layouts/LayoutBlog.astro";
+import Layout from '../../layouts/Layout.astro';
 import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
 import type { PostProps } from "../../../Type";
@@ -17,11 +17,9 @@ export async function getStaticPaths() {
 }
 
 
-const { post } = Astro.props as 
-  | { post: PostProps }
-  | { post: PostProps; preview: boolean };
+const { post } = Astro.props as | { post: PostProps }| { post: PostProps; preview: boolean };
 ---
-<LayoutBlog title={post.title}>
+<Layout title={post.title}>
 <div
 class="pt-4 xl:pl-10 mx-3 "
     
@@ -52,7 +50,7 @@ class="pt-4 xl:pl-10 mx-3 "
   <div class="container mx-auto px-4 py-8 ">
   <div class="max-w-3xl mx-auto">
     <!-- Title -->
-    <h1 class="text-4xl font-bold mb-4 text-gray-800">{post.title}</h1>
+    <h1 class="md:text-4xl text-2xl font-bold mb-4 text-gray-800">{post.title}</h1>
 
     <!-- Author -->
     {post.author && (
@@ -78,7 +76,14 @@ class="pt-4 xl:pl-10 mx-3 "
     )}
 
     <!-- Published Date -->
-    <p class="text-gray-600 mb-4">
+    <p class="
+
+    mb-4
+    italic
+    text-xl
+    font-semibold
+
+    ">
       Published on {new Date(post.publishedAt).toLocaleDateString()}
     </p>
 
@@ -87,7 +92,7 @@ class="pt-4 xl:pl-10 mx-3 "
       <div class="mb-4">
         <Image
           width={850}
-          height={250}
+          height={350}
           src={UrlForImage(post.mainImage).url()}
           alt={post.title}
           class="rounded-lg"
@@ -130,7 +135,7 @@ class="pt-4 xl:pl-10 mx-3 "
           } else if (block.style === "h3") {
             blockStyle = "text-2xl font-bold mb-4";
           } else if (block.style === "h4") {
-            blockStyle = "text-xl font-bold bg-yellow-400 text-center mx-14";
+            blockStyle = "md:text-xl md:font-bold bg-red-500 text-white  text-center md:mx-14";
           } else if (block.style === "blockquote") {
             blockStyle = "border-l-4 border-gray-900 pl-4 italic my-4";
           } else if (block.style === "normal") {
@@ -177,7 +182,7 @@ class="pt-4 xl:pl-10 mx-3 "
 {/* Nutrition */}
 {post.nutrition && (
   <div class="mb-4">
-    <h2 class="text-2xl font-bold mb-2 text-yellow-500">Nutrition Information</h2>
+    <h2 class="text-2xl font-bold my-3  text-red-500">Nutrition Information</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="flex items-center">
         <div class="w-14 h-14 rounded-full bg-red-500 flex items-center justify-center">
@@ -192,7 +197,7 @@ class="pt-4 xl:pl-10 mx-3 "
         <div class="w-14 h-14 rounded-full bg-green-500 flex items-center justify-center">
           <p class="text-2xl font-bold text-white">{post.nutrition.carbohydrates}</p>
         </div>
-        <div class="ml-4">
+        <div class="ml-1">
           <p class="text-lg font-semibold mb-1 text-gray-900">Carbohydrates</p>
           <p class="text-gray-600">per serving</p>
         </div>
@@ -240,4 +245,4 @@ class="pt-4 xl:pl-10 mx-3 "
   </div>
 </div>
 
-</LayoutBlog>
+</Layout>
