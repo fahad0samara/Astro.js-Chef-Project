@@ -12,7 +12,15 @@ const firstPost = await getFirstBlogPost();
       {/* Heading */}
       <div class="mb-10 md:mb-16">
         <h2 class="mb-4 text-center text-3xl font-bold text-gray-900 md:mb-6 lg:text-4xl">Recent Posts</h2>
-        <p class="mx-auto max-w-screen-md text-center text-gray-600 md:text-lg">Discover delicious recipes, cooking tips, and more.</p>
+        <p class="mx-auto max-w-screen-md text-center text-gray-600 md:text-lg">Discover 
+                    <span class="relative inline-flex justify-center whitespace-nowrap font-bold mx-2">
+                                <Icon name="under" 
+              class="absolute -bottom-2 hidden w-28 text-red-400 sm:block"
+                                 />
+
+                      delicious recipes, 
+                </span>
+   cooking tips, and more.</p>
       </div>
       {/* /Heading */}
     <div class="grid gap-4 items-center sm:grid-cols-2 sm:gap- lg:grid-cols-2 xl:grid-cols-2">
