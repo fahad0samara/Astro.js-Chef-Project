@@ -1,97 +1,66 @@
 ---
-import { getFirstBlogPost } from "../../lib/api";
+import { UrlForImage, getFirstBlogPost } from "../../lib/api";
 import { Image } from '@astrojs/image/components';
 import { Icon } from "astro-icon";
 
 const firstPost = await getFirstBlogPost();
 ---
 
-
-  <section class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-xl px-4 md:px-8">
-      {/* Heading */}
-      <div class="mb-10 md:mb-16">
-        <h2 class="mb-4 text-center text-3xl font-bold text-gray-900 md:mb-6 lg:text-4xl">Recent Posts</h2>
-        <p class="mx-auto max-w-screen-md text-center text-gray-600 md:text-lg">Discover 
-                    <span class="relative inline-flex justify-center whitespace-nowrap font-bold mx-2">
-                                <Icon name="under" 
-              class="absolute -bottom-2 hidden w-28 text-red-400 sm:block"
-                                 />
-
-                      delicious recipes, 
-                </span>
-   cooking tips, and more.</p>
-      </div>
-      {/* /Heading */}
-    <div class="grid gap-4 items-center sm:grid-cols-2 sm:gap- lg:grid-cols-2 xl:grid-cols-2">
-  <!-- Article -->
-  {firstPost.map((post: any) => (
-    <article class="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
-      {post.mainImage && (
-        <a href={`/blog/${post.slug.current}`} class="block relative h-48 overflow-hidden rounded-md">
-          <Image
-            src={post.imageUrl}
-            alt={post.title}
-            class="group relative block  w-full object-cover self-start overflow-hidden rounded-lg shadow-lg  transition duration-200 transform hover:scale-105"
-            width={200}
-            height={200}
-          />
-          <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-200">
-            <Icon
-              name="arrow-right"
-              class="w-10 h-10 text-white bg-red-500 rounded-full p-2"
-            />
-          </div>
-        </a>
-      )}
-
-      <div class="flex flex-col gap-2 items-center">
-        <span class="text-xs text-gray-500 font-semibold">
-          {post.publishDate}
+<section class="bg-white py-6 sm:py-8 lg:py-12">
+  <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+    <!-- Heading -->
+    <div class="mb-10 md:mb-16">
+      <h2 class="mb-4 text-center text-3xl font-bold text-gray-900 md:mb-6 lg:text-4xl">Recent Posts</h2>
+      <p class="mx-auto max-w-screen-md text-center text-gray-600 md:text-lg">
+        Discover 
+        <span class="relative inline-flex justify-center whitespace-nowrap font-bold mx-2">
+          <Icon name="under" class="absolute -bottom-2 hidden w-28 text-red-400 sm:block" />
+          delicious recipes, 
         </span>
-
-        <h2 class="text-xl font-bold text-gray-900">
-          <a href="#" class="transition duration-100 hover:text-green-500 active:text-green-600">{post.title}</a>
-        </h2>
-
-        <p class="text-gray-700">
-          {post.bodyPreview && (
-            <p class="text-gray-500 mb-4">{post.bodyPreview}</p>
-          )}
-        </p>
-
-        {post.categories && (
-          <div class="text-gray-500 mb-2">
-            Categories:{" "}
-            {post.categories.map((category: any, index: number) => (
-              <span>
-                {category.title}
-                {index < post.categories.length - 1 && ", "}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div class="flex items-center gap-2 text-sm font-semibold">
-            <a
-         
-            
-             href={`/blog/${post.slug.current}`}
-                title={post.title}
-
-              class="flex items-center font-semibold text-red-600 transition duration-100 hover:text-red-600 active:text-red-700">
-       red more
-          </a>
-          <Icon
-            name="arrow-right"
-            class="w-7 h- cursor-pointer animate-pulse mt-1 text-red-500 transition duration-100 hover:text-red-600 active:text-red-700"
-          />
-        </div>
-      </div>
-    </article>
-  ))}
-</div>
-
+        cooking tips, and more.
+      </p>
     </div>
-  </section>
+    <!-- /Heading -->
+
+    <div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-16">
+      <!-- Article -->
+      {firstPost.map((post: any) => (
+        <article class="bg-white rounded-lg shadow-xl overflow-hidden">
+          <a class="block transition hover:scale-105" title={post.title} href={`/blog/${post.slug.current}`}>
+            <div class="h-52 bg-cover bg-center rounded-t-lg" style={{ backgroundImage: `url(${post.imageUrl})` }}></div>
+            <div class="p-4">
+              <h2 class="mb-2 text-xl font-semibold text-gray-900 overflow-hidden h-14 md:h-16 lg:h-14 xl:h-16">
+                {post.title}
+              </h2>
+              <div class="flex items-center mb-2">
+                <div class="flex-shrink-0">
+                  <img class="h-8 w-8 rounded-full object-cover" src={UrlForImage(post.author.image).url()} alt={post.author.name} />
+                </div>
+                <div class="ml-2">
+                  <p class="text-sm font-medium text-gray-900">{post.author.name}</p>
+                  <p class="text-xs text-gray-600">{new Date(post.publishedAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+              <div>
+                <a 
+                  title={post.title}
+                  href={`/blog/${post.slug.current}`}
+                  class="inline-flex items-center px-2 border text-white border-transparent text-lg font-medium rounded-full shadow-sm text-red-500 italic hover:bg-red-500 hover:text-white bg-[#dc2626]"
+               
+                >
+                  Read More...
+                </a>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+
+
+
 
