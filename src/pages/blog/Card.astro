@@ -65,8 +65,14 @@ const firstPost = await getFirstBlogPost();
         )}
 
         <div class="flex items-center gap-2 text-sm font-semibold">
-            <a href={`/blog/${post.slug.current}`} class="flex items-center font-semibold text-red-600 transition duration-100 hover:text-red-600 active:text-red-700">
-            Continue reading: {post.title}
+            <a
+         
+            
+             href={`/blog/${post.slug.current}`}
+                title={post.title}
+
+              class="flex items-center font-semibold text-red-600 transition duration-100 hover:text-red-600 active:text-red-700">
+       red more
           </a>
           <Icon
             name="arrow-right"

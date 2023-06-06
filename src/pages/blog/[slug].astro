@@ -3,6 +3,7 @@ import { getFirstBlogPost, UrlForImage } from "../../lib/api";
 import LayoutBlog from "../../layouts/LayoutBlog.astro";
 import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
+import type { PostProps } from "../../../Type";
 export async function getStaticPaths() {
   const allBlogPosts = await getFirstBlogPost();
   return allBlogPosts.map((post: { slug: { current: any; }; }) => ({
@@ -15,38 +16,7 @@ export async function getStaticPaths() {
   }));
 }
 
-type PostProps = {
-  title: string;
-  author: {
-    image: string;
-    name: string;
-    bio: {
-      children: {
-        text: string;
-      }[];
-    }[];
-  };
-  publishedAt: string;
-  mainImage: string;
-  bio?: {
-    text: string;
-  };
-  tags?: string[];
-  body?: {
-    _type: string;
-    style: string;
-  listItem?: string | undefined; 
-    children: {
-      text: string;
-    }[];
-  }[];
-  nutrition?: {
-    calories: number;
-    carbohydrates: number;
-    fat: number;
-    protein: number;
-  };
-};
+
 const { post } = Astro.props as 
   | { post: PostProps }
   | { post: PostProps; preview: boolean };
