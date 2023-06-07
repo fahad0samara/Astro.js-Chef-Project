@@ -2,6 +2,8 @@
 
 Welcome to the Balanced Chef project! This open-source project aims to provide a comprehensive solution for meal planning and recipe management, helping users maintain a balanced and healthy diet. With an intuitive user interface and powerful features, Balanced Chef simplifies the process of planning meals, discovering new recipes, and ensuring a wholesome culinary experience.
 
+![The Balanced Chef](https://github.com/fahad0samara/Astro.js/assets/90055525/0b628f4e-ba11-4e5f-bf37-162141a88c6c)
+
 ## Project Overview
 
 The Balanced Chef project is built using Astro.js, a modern front-end framework that allows for efficient static site generation. The codebase is organized into different directories, each serving a specific purpose. Let's take a closer look at the main directories and their functionalities:
